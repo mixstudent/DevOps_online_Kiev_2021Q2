@@ -1,0 +1,71 @@
+
+2.UID is a positive integer. Usually this number is chosen automatically when registering an account, but it cannot be completely arbitrary. Linux has some conventions about what types of users certain standards can be issued. In particular, UIDs "0" through "100" are reserved for pseudo-users.
+
+On most Linux distributions, UIDs 1-500 are usually reserved for system users. On Ubuntu and Fedora, UIDs for new users start at 1000.
+On Linux, UID - 0 is reserved for the root user.
+
+3.GID unique identifier of the group within the system to which the user belongs.
+group_name:password:group_id:list
+
+4.Thegroup_idfieldcontainsa uniqueidentifierforthisgroup.  Thelistfieldcontainsa  commaseparatedlistofusersbelongingtothisgroup. Usersdonotneedtobeincludedinthelistofthosegroupsthatarespecifiedastheirprimaryinthe/etc/passwdfile.
+
+5. The main commands for working with Linux accounts are useradd, userdel, and usermod, as well as the password file editor vipw. The command interface is as follows:
+1) useradd[-c uidcomment] [-d dir] [  -e expire] [-f inactive] [-g gid] [  -m [-k skel_dir]] [-s shell][-u uid[-o]] username
+2) userdel[-r] username
+3) usermod[-c uidcomment] [-d dir[-m]] [-e expire] [-f inactive] [-g gid] [  -G gid[,   gid]][-l new username] [-s shell] [-u uid[-o]] username
+
+The main parameters have the following meanings:username is the login name of the user. This is the only required parameter in all commands.
+uidcomment is an additional comment about the user with the specified 
+name.dir- indicates to the user's home directory.
+expire - indicates the exact date untillregistration record are availble.
+inactive - indicates a continuous number of days without registration in the system before this record is blocked.
+gid- defines the id or name of the group to which the user belongs.
+new_username- Replaces the old login name.
+shell - defines the shell for the command interpreter for the given user.
+skel_dir- contains files which must be copied to the new user's home directory.
+uidis the unique user identifier associated with this name.-m -indicates need to create a new home directory (useradd) or move the current one to a new location (usermod).
+-o - Allows repeating the same user ID.
+-g - Select the main group for the login name.
+-G - selects additional groups.
+-r - Tells the user's home directory to be moved. 
+If the home directory for the registration entry is out of date, existing files will be migrated to the new directory.
+
+7. Change the name (account name)
+	sudo usermod -l new_username old_username
+
+8. Remove a user from the system 
+	sudo userdel -r user1
+
+9. Lock user account
+	passwd -l user_name
+unlock user account
+	passwd -u user_name
+
+10. Remove a user's password and provide him with a password-free login for subsequent password change
+	sudo passwd --expire user_name
+
+11. Extended format of information about the directory
+	ls -l
+
+12. The first character indicates the filetype:-  
+- regularfile;
+d - directory;
+b - blockdevice;
+c - characterdevice;
+l - symboliclink;
+p - pipe(pipe,fifo);
+s - socket.
+
+Nine characters representation as"rwxrwxrwx", wheresome "r", "w" and "x" can be replaced with "-".
+Symbols reflectthe three types of access accepted in Linux-  
+read,
+write and 
+use-  however they are present intriplicate in the shortcut!
+
+13. 
+When there lationship between the file and the user who started the process,the role is determined as follows:
+If the UID of the file is the same as the UID of the process,the user is the owner of the file
+If the GID of the file matches the GID of any group the user belongs to,he is amember of the group to which the file be longs.
+If neither the UID no the GID of afile over laps with the UID of the processand the list of group sthat the user running it belongs to, that user is an outsider.
+
+14.
